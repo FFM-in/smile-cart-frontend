@@ -1,29 +1,38 @@
 import React, { useEffect, useState } from "react";
 
 import productsApi from "apis/products";
+import Carousel from "components/Carousel";
+import PageNotFound from "components/commons/PageNotFound";
 import { Spinner } from "neetoui";
 import { append, isNotNil } from "ramda";
-import Carousel from "src/components/Carousel";
+import { useParams } from "react-router-dom";
+import Header from "src/components/commons/Header";
+
 // import { IMAGE_URLS } from "src/components/constants";
 
 const Product = () => {
+  const [isError, setIsError] = useState(false);
+  const { slug } = useParams();
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchProduct = async () => {
+  const fetchProducts = async () => {
     try {
-      const product = await productsApi.show();
-      setProduct(product);
-    } catch (error) {
-      console.log("An error occurred:", error);
+      const response = await productsApi.show(slug);
+      setProduct(response);
+      console.log(response);
+    } catch {
+      setIsError(true);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProduct();
+    fetchProducts();
   }, []);
+
+  if (isError) return <PageNotFound />;
 
   if (isLoading) {
     return (
@@ -39,11 +48,8 @@ const Product = () => {
   const discountPercentage = ((totalDiscounts / mrp) * 100).toFixed(1);
 
   return (
-    <div className="px-6 pb-6">
-      <div>
-        <p className="py-2 text-4xl font-semibold">{name}</p>
-        <hr className="border-2 border-black" />
-      </div>
+    <>
+      <Header title={name} />
       <div className="mt-16 flex gap-4">
         <div className="w-23/5">
           <div className="flex justify-center gap-16">
@@ -63,7 +69,7 @@ const Product = () => {
           </p>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
