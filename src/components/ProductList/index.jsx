@@ -4,7 +4,7 @@ import productsApi from "apis/products";
 import { Header } from "components/commons";
 import useDebounce from "hooks/useDebounce";
 import { Spinner, Input, NoData } from "neetoui";
-import { isEmpty, without } from "ramda";
+import { isEmpty } from "ramda";
 
 import ProductListItem from "./ProductListItem";
 
@@ -17,7 +17,7 @@ export const ProductList = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [cartItems, setCartItems] = useState([]);
+  // const [cartItems, setCartItems] = useState([]);
 
   const fetchProducts = async () => {
     try {
@@ -45,17 +45,16 @@ export const ProductList = () => {
     );
   }
 
-  const toggleIsInCart = slug =>
-    setCartItems(prevCartItems =>
-      prevCartItems.includes(slug)
-        ? without([slug], cartItems)
-        : [slug, ...cartItems]
-    );
+  // const toggleIsInCart = slug =>
+  //   setCartItems(prevCartItems =>
+  //     prevCartItems.includes(slug)
+  //       ? without([slug], cartItems)
+  //       : [slug, ...cartItems]
+  //   );
 
   return (
     <div className="flex h-screen flex-col">
       <Header
-        cartItemsCount={cartItems.length}
         shouldShowBackButton={false}
         title="Smile cart"
         actionBlock={
@@ -74,8 +73,8 @@ export const ProductList = () => {
             <ProductListItem
               key={product.slug}
               {...product}
-              isInCart={cartItems.includes(product.slug)}
-              toggleIsInCart={() => toggleIsInCart(product.slug)}
+              // isInCart={cartItems.includes(product.slug)}
+              // toggleIsInCart={() => toggleIsInCart(product.slug)}
             />
           ))}
         </div>

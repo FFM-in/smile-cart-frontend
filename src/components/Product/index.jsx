@@ -5,7 +5,7 @@ import PageNotFound from "components/commons/PageNotFound";
 import { Spinner } from "neetoui";
 import { append, isNotNil } from "ramda";
 import { useParams } from "react-router-dom";
-import Header from "src/components/commons/Header";
+import { Header, AddToCart } from "src/components/commons";
 
 import Carousel from "./Carousel";
 
@@ -68,6 +68,7 @@ export const Product = () => {
           <p className="font-semibold text-green-600">
             {discountPercentage}% off
           </p>
+          <AddToCart {...{ slug }} />
         </div>
       </div>
     </>
