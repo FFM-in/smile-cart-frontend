@@ -6,7 +6,7 @@ import { Spinner, Button } from "neetoui";
 import { append, isNotNil } from "ramda";
 import { useParams } from "react-router-dom";
 import { Header, AddToCart } from "src/components/commons";
-import { useSelectedQuantity } from "src/components/hooks/useSelectedQuantity";
+import useSelectedQuantity from "src/components/hooks/useSelectedQuantity";
 import routes from "src/routes";
 
 import Carousel from "./Carousel";
