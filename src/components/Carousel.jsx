@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 import classNames from "classnames";
 import { Left, Right } from "neetoicons";
@@ -8,28 +8,27 @@ const Carousel = ({ imageUrls, title }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const timerRef = useRef(null);
 
-  const resetTimer = () => {
+  const handleNext = useCallback(() => {
+    setCurrentIndex(prevIndex => (prevIndex + 1) % imageUrls.length);
+  }, [imageUrls.length]);
+
+  const resetTimer = useCallback(() => {
     clearInterval(timerRef.current);
     timerRef.current = setInterval(handleNext, 3000);
-  };
+  }, [handleNext]);
 
-  const handleNext = () => {
-    resetTimer();
-    setCurrentIndex(prevIndex => (prevIndex + 1) % imageUrls.length);
-  };
-
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     resetTimer();
     setCurrentIndex(
       prevIndex => (prevIndex - 1 + imageUrls.length) % imageUrls.length
     );
-  };
+  }, [imageUrls.length, resetTimer]);
 
   useEffect(() => {
     timerRef.current = setInterval(handleNext, 3000);
 
     return () => clearInterval(timerRef.current);
-  }, []);
+  }, [handleNext]);
 
   return (
     <div className="flex items-center">
@@ -65,7 +64,10 @@ const Carousel = ({ imageUrls, title }) => {
         className="shrink-0 focus-within:ring-0 hover:bg-transparent"
         icon={Right}
         style="text"
-        onClick={handleNext}
+        onClick={() => {
+          handleNext();
+          resetTimer();
+        }}
       />
     </div>
   );
