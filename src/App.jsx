@@ -4,8 +4,8 @@ import routes from "routes";
 import "./App.css";
 import Cart from "./components/Cart";
 import { PageNotFound } from "./components/commons";
-import { Product } from "./components/Product";
-import { ProductList } from "./components/ProductList";
+import Product from "./components/Product";
+import ProductList from "./components/ProductList";
 
 const App = () => (
   <Switch>
