@@ -1,24 +1,22 @@
+import { Route, Redirect, Switch } from "react-router-dom";
+import routes from "routes";
+
 import "./App.css";
-// eslint-disable-next-line import/extensions
-import logo from "./logo.svg";
+import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
+import { PageNotFound } from "./components/commons";
+import Product from "./components/Product";
+import ProductList from "./components/ProductList";
 
 const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <img alt="logo" className="App-logo" src={logo} />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        Learn React
-      </a>
-    </header>
-  </div>
+  <Switch>
+    <Route exact component={Product} path={routes.products.show} />
+    <Route exact component={ProductList} path={routes.products.index} />
+    <Redirect exact from={routes.root} to={routes.products.index} />
+    <Route exact component={Checkout} path={routes.checkout} />
+    <Route exact component={Cart} path={routes.cart} />
+    <Route component={PageNotFound} path="*" />
+  </Switch>
 );
 
 export default App;
