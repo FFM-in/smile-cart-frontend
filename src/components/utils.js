@@ -1,8 +1,8 @@
 import { sum } from "ramda";
 import useCartItemsStore from "stores/useCartItemsStore";
 
-export const useCartTotal = (products, priceKey) => {
-  const cartItems = useCartItemsStore(store => store.cartItems);
+export const cartTotalOf = (products, priceKey) => {
+  const { cartItems } = useCartItemsStore.getState();
 
   return sum(
     products.map(product => product[priceKey] * cartItems[product.slug])

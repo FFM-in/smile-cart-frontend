@@ -1,18 +1,19 @@
-import memo from "react";
+import { memo } from "react";
 
 import { LeftArrow } from "neetoicons";
 import { Typography } from "neetoui";
 import { keys } from "ramda";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useHistory, Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import routes from "routes";
 import useCartItemsStore from "stores/useCartItemsStore";
 
-const Header = ({ title, actionBlock, shouldShowBackButton = true }) => {
+const Header = ({ title, shouldShowBackButton = true, actionBlock }) => {
+  const history = useHistory();
+
   const cartItemsCount = useCartItemsStore(
     store => keys(store.cartItems).length
   );
-  const history = useHistory();
 
   return (
     <div className="m-2">

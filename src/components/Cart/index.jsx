@@ -1,5 +1,5 @@
 import { PageLoader, Header } from "components/commons";
-import { useCartTotal } from "components/utils";
+import { cartTotalOf } from "components/utils";
 import { useFetchCartProducts } from "hooks/reactQuery/useProductsApi";
 import i18n from "i18next";
 import { NoData } from "neetoui";
@@ -20,8 +20,8 @@ const Cart = () => {
 
   const { data: products = [], isLoading } = useFetchCartProducts(slugs);
 
-  const totalMrp = useCartTotal(products, MRP);
-  const totalOfferPrice = useCartTotal(products, OFFER_PRICE);
+  const totalMrp = cartTotalOf(products, MRP);
+  const totalOfferPrice = cartTotalOf(products, OFFER_PRICE);
 
   if (isLoading) return <PageLoader />;
 
