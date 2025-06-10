@@ -1,38 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import productsApi from "apis/products";
 import { Header, PageLoader } from "components/commons";
+import { useFetchProducts } from "hooks/reactQuery/useProductsApi";
 import useDebounce from "hooks/useDebounce";
 import { Search } from "neetoicons";
 import { Input, NoData } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
+import withTitle from "utils/withTitle";
 
 import ProductListItem from "./ProductListItem";
 
 const ProductList = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState([]);
   const [searchKey, setSearchKey] = useState("");
 
   const { t } = useTranslation();
 
   const debouncedSearchKey = useDebounce(searchKey);
 
-  const fetchProducts = async () => {
-    try {
-      const data = await productsApi.fetch({ searchTerm: debouncedSearchKey });
-      setProducts(data.products);
-    } catch (error) {
-      console.log(t("error.genericError", { error }));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, [debouncedSearchKey]);
+  const { data: { products = [] } = {}, isLoading } = useFetchProducts({
+    searchTerm: debouncedSearchKey,
+  });
 
   if (isLoading) {
     return <PageLoader />;
@@ -66,4 +54,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default withTitle(ProductList);
