@@ -1,4 +1,4 @@
-import memo from "react";
+import { memo } from "react";
 
 import AddToCart from "components/commons/AddToCart";
 import { Typography } from "neetoui";

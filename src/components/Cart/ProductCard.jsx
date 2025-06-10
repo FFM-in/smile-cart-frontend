@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { useState, memo } from "react";
 
 import ProductQuantity from "components/commons/ProductQuantity";
 import { Delete } from "neetoicons";
